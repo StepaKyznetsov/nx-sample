@@ -14,7 +14,10 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@nx-sample/http-client": ["libs/shared/http-client/src/index.ts"],
+      "@nx-sample/websocket": ["libs/shared/websocket/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
