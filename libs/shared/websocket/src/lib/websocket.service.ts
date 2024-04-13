@@ -27,11 +27,11 @@ export class WebsocketService {
     };
   }
 
-  sendMessage(message: string): void {
+  public sendMessage(message: string): void {
     this.socket.send(message);
   }
 
-  closeConnection(): void {
+  public closeConnection(): void {
     this.socket.close();
   }
 }

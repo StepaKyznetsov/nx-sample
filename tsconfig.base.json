@@ -15,6 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@env/environment": ["apps/base/src/environments/environment.ts"],
+      "@nx-sample/app-config": ["libs/shared/app-config/src/index.ts"],
+      "@nx-sample/error-handler": ["libs/shared/error-handler/src/index.ts"],
       "@nx-sample/http-client": ["libs/shared/http-client/src/index.ts"],
       "@nx-sample/websocket": ["libs/shared/websocket/src/index.ts"]
     }

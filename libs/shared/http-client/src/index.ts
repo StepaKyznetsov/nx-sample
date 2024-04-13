@@ -1,2 +1,2 @@
-export * from './lib/http-client/http-client.service';
-export * from './lib/http-client/api-url.token';
+export * from './lib/http-client.service';
+export * from './lib/api-url.token';
