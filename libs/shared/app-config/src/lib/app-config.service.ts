@@ -4,24 +4,19 @@ import { firstValueFrom, tap } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 
 @Injectable({ providedIn: 'root' })
-export class AppConfigService {
+export class AppConfigService<T extends object> {
   private readonly http = inject(HttpClientService);
 
-  public config!: unknown;
+  public config!: T;
 
-  public getRemoteConfig(): Promise<typeof this.config> {
-    return firstValueFrom(
-      this.http
-        .get<typeof this.config>('config-path')
-        .pipe(tap((config) => (this.config = config)))
-    );
-  }
-
-  public getLocalConfig(): Promise<typeof this.config> {
+  public fetchConfig(): Promise<T> {
     return firstValueFrom(
       ajax
-        .getJSON<typeof this.config>('config-path')
-        .pipe(tap((config) => (this.config = config)))
+        .getJSON<T>('/assets/config.json')
+        .pipe(tap((config) => {
+          console.log(config);
+          (this.config = config)
+        }))
     );
   }
 }

@@ -6,7 +6,7 @@ import {
 } from '@angular/router';
 import { appRoutes } from './app.routes';
 import { AppConfigService } from '@nx-sample/app-config';
-import { API_URL } from '@nx-sample/http-client'; 
+import { API_URL } from '@nx-sample/http-client';
 import { errorHandlingInterceptor } from '@nx-sample/error-handler';
 import { environment } from '../environments/environment';
 import { provideRouterStore } from '@ngrx/router-store';
@@ -15,10 +15,12 @@ import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 
-function initializeAppFactory(
-  configService: AppConfigService
-): () => Promise<unknown> {
-  return () => configService.getRemoteConfig();
+interface AppConfig {
+  type: 'web' | 'terminal';
+}
+
+function initializeAppFactory(configService: AppConfigService<AppConfig>) {
+  return () => configService.fetchConfig();
 }
 
 export const appConfig: ApplicationConfig = {
@@ -41,7 +43,7 @@ export const appConfig: ApplicationConfig = {
     },
     {
       provide: API_URL,
-      useValue: environment.api_url
-    }
+      useValue: environment.api_url,
+    },
   ],
 };
