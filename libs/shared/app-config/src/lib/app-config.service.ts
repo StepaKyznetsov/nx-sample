@@ -1,22 +1,15 @@
-import { HttpClientService } from '@nx-sample/http-client';
-import { Injectable, inject } from '@angular/core';
-import { firstValueFrom, tap } from 'rxjs';
+import { Injectable } from '@angular/core';
 import { ajax } from 'rxjs/ajax';
+
+const CONFIG_URL = '/assets/config.json';
 
 @Injectable({ providedIn: 'root' })
 export class AppConfigService<T extends object> {
-  private readonly http = inject(HttpClientService);
+  config!: T;
 
-  public config!: T;
-
-  public fetchConfig(): Promise<T> {
-    return firstValueFrom(
-      ajax
-        .getJSON<T>('/assets/config.json')
-        .pipe(tap((config) => {
-          console.log(config);
-          (this.config = config)
-        }))
-    );
+  fetchConfig() {
+    return ajax.getJSON<T>(CONFIG_URL).subscribe((config) => {
+      this.config = config;
+    });
   }
 }

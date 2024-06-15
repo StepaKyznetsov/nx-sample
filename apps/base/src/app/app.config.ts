@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, ApplicationConfig } from '@angular/core';
+import { APP_INITIALIZER, ApplicationConfig, inject } from '@angular/core';
 import {
   provideRouter,
   withComponentInputBinding,
@@ -19,10 +19,6 @@ interface AppConfig {
   type: 'web' | 'terminal';
 }
 
-function initializeAppFactory(configService: AppConfigService<AppConfig>) {
-  return () => configService.fetchConfig();
-}
-
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(
@@ -38,8 +34,7 @@ export const appConfig: ApplicationConfig = {
     {
       provide: APP_INITIALIZER,
       multi: true,
-      deps: [AppConfigService],
-      useFactory: initializeAppFactory,
+      useFactory: () => inject(AppConfigService<AppConfig>).fetchConfig(),
     },
     {
       provide: API_URL,
